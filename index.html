@@ -365,7 +365,7 @@
     </div>
     <div class="user-info-bar hidden" id="userInfoBar">
       <div class="user-pill">
-        👤 <span id="lblStudentInfo">Hồ Văn Hân (6A3)</span>
+        👤 <span id="lblStudentInfo">Nguyễn Văn A (6A3)</span>
       </div>
       <button class="btn-logout" onclick="logout()">↳ Thoát</button>
     </div>
@@ -378,7 +378,7 @@
       <h2>ĐĂNG NHẬP HỌC SINH</h2>
       <div class="form-group">
         <label for="txtHoTen">Họ và tên học sinh:</label>
-        <input type="text" id="txtHoTen" placeholder="Ví dụ: Hồ Văn Hân">
+        <input type="text" id="txtHoTen" placeholder="Ví dụ: Nguyễn Văn A">
       </div>
       <div class="form-group">
         <label for="txtLop">Lớp:</label>
@@ -392,8 +392,8 @@
       <!-- HEADER BÀI HỌC -->
       <div class="card lesson-header">
         <button class="btn-back" onclick="logout()">← Thoát</button>
-        <div class="lesson-category">NATURE & ENVIRONMENT</div>
-        <div class="lesson-title">IN ONE CUBIC FOOT - LUYỆN TRẮC NGHIỆM</div>
+        <div class="lesson-category">CHƯƠNG TRÌNH THỬ NGHIỆM</div>
+        <div class="lesson-title">LUYỆN TRẮC NGHIỆM</div>
       </div>
 
       <!-- KHUNG CÂU HỎI -->
@@ -427,7 +427,7 @@
   </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw0LcQ9t0Eh6e3tbvUldbjyBCNmpG37pwx0JfuWpy1lb7X13axrEbwJnLn6G8j6lK3mvg/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwKCMp_IXkRI1mqP4Jp6Vg6QuYa8LhEXx3J39qis5HrX7oLsqDDnXZZhISrWuL1Z2yxXg/exec";
 
     let questionsData = [];
     let currentQuestionIndex = 0;
@@ -510,39 +510,43 @@
     }
 
     // Xử lý khi chọn 1 đáp án
-    function selectOption(selectedKey, selectedBtn) {
-      const q = questionsData[currentQuestionIndex];
-      const buttons = document.querySelectorAll(".option-btn");
+    // Xử lý khi chọn 1 đáp án
+function selectOption(selectedKey, selectedBtn) {
+  const q = questionsData[currentQuestionIndex];
+  const buttons = document.querySelectorAll(".option-btn");
 
-      // Vô hiệu hóa tất cả các nút sau khi đã chọn
-      buttons.forEach(btn => btn.disabled = true);
+  // Vô hiệu hóa tất cả các nút sau khi đã chọn
+  buttons.forEach(btn => btn.disabled = true);
 
-      // Lưu câu trả lời của học sinh
-      studentAnswers[currentQuestionIndex] = selectedKey;
+  // Lưu câu trả lời của học sinh
+  studentAnswers[currentQuestionIndex] = selectedKey;
 
-      const isCorrect = selectedKey.toUpperCase() === q.correctAnswer.toUpperCase();
-      const feedback = document.getElementById("feedbackBox");
+  const isCorrect = selectedKey.toUpperCase() === q.correctAnswer.toUpperCase();
+  const feedback = document.getElementById("feedbackBox");
 
-      if (isCorrect) {
-        selectedBtn.classList.add("correct");
-        feedback.innerText = "🎉 Chính xác!";
-        feedback.className = "feedback-box correct";
-      } else {
-        selectedBtn.classList.add("wrong");
-        // Highlight đáp án đúng
-        const correctText = q.options[q.correctAnswer.toUpperCase()];
-        feedback.innerText = `❌ Chưa chính xác! Đáp án đúng là: ${q.correctAnswer}. ${correctText}`;
-        feedback.className = "feedback-box wrong";
-      }
+  // Lấy câu diễn giải (nếu không có thì để khoảng trắng)
+  const explanationText = q.explanation ? `<br><b>Diễn giải:</b> ${q.explanation}` : '';
 
-      // Hiện nút tiếp theo / nộp bài
-      const btnNext = document.getElementById("btnNext");
-      if (currentQuestionIndex === questionsData.length - 1) {
-        btnNext.innerText = "Nộp bài & Lưu kết quả 🚀";
-      } else {
-        btnNext.innerText = "Câu tiếp theo ➔";
-      }
-      btnNext.style.display = "block";
+  if (isCorrect) {
+    selectedBtn.classList.add("correct");
+    feedback.innerHTML = `<b>Kết quả:</b> Đúng 🎉 ${explanationText}`;
+    feedback.className = "feedback-box correct";
+  } else {
+    selectedBtn.classList.add("wrong");
+    const correctOptionText = q.options[q.correctAnswer.toUpperCase()] || '';
+    feedback.innerHTML = `<b>Kết quả:</b> Sai ❌ (Đáp án đúng là: <b>${q.correctAnswer}. ${correctOptionText}</b>) ${explanationText}`;
+    feedback.className = "feedback-box wrong";
+  }
+
+  // Hiện nút tiếp theo / nộp bài
+  const btnNext = document.getElementById("btnNext");
+  if (currentQuestionIndex === questionsData.length - 1) {
+    btnNext.innerText = "Nộp bài & Lưu kết quả 🚀";
+  } else {
+    btnNext.innerText = "Câu tiếp theo ➔";
+  }
+  btnNext.style.display = "block";
+}
     }
 
     // Qua câu tiếp theo hoặc nộp bài
