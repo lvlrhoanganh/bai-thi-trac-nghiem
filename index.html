@@ -3,126 +3,585 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bài Thi Trắc Nghiệm</title>
+  <title>ENGLISH JOURNEY - MS. NGUYENMEE</title>
+  <!-- Google Font Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
-    .form-group { margin-bottom: 15px; }
-    label { font-weight: bold; display: block; margin-bottom: 5px; }
-    input[type="text"] { padding: 8px; width: 100%; max-width: 300px; box-sizing: border-box; }
-    .question { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
-    button { padding: 10px 20px; background-color: #0F9D58; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
-    button:hover { background-color: #0b8043; }
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #FAF6EE;
+      color: #1A1A1A;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOP HEADER */
+    header {
+      background-color: #FFFFFF;
+      border-bottom: 3px solid #000;
+      padding: 12px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 0 #000;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      background-color: #FF6B00;
+      border: 2px solid #000;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #FFF;
+      font-size: 20px;
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-title span {
+      color: #FF6B00;
+    }
+
+    .user-info-bar {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-pill {
+      background: #FFF;
+      border: 2.5px solid #000;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 3px 3px 0 #000;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-logout {
+      background: #FFF;
+      border: 2.5px solid #000;
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 #000;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.1s;
+    }
+
+    .btn-logout:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 #000;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 850px;
+      margin: 30px auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    /* CARD STYLING (Brutalism Style) */
+    .card {
+      background: #FFFFFF;
+      border: 3px solid #000;
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 #000;
+      padding: 24px;
+      margin-bottom: 25px;
+    }
+
+    /* LOGIN SCREEN */
+    .login-card {
+      text-align: center;
+      max-width: 450px;
+      margin: 50px auto;
+    }
+
+    .login-card h2 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 2.5px solid #000;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      outline: none;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: #FF6B00;
+      color: #FFF;
+      border: 3px solid #000;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 #000;
+      transition: all 0.1s;
+      margin-top: 10px;
+    }
+
+    .btn-primary:hover {
+      background: #e56000;
+    }
+
+    .btn-primary:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    /* LESSON HEADER CARD */
+    .lesson-header {
+      text-align: center;
+      position: relative;
+      padding: 18px;
+    }
+
+    .lesson-category {
+      font-size: 12px;
+      font-weight: 800;
+      color: #8899A6;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .lesson-title {
+      font-size: 22px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .btn-back {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* QUIZ QUESTION CARD */
+    .question-badge {
+      display: inline-block;
+      background: #FF6B00;
+      color: #FFF;
+      border: 2.5px solid #000;
+      padding: 6px 16px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 3px 3px 0 #000;
+      margin-bottom: 20px;
+    }
+
+    .question-text {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.4;
+      margin-bottom: 25px;
+    }
+
+    /* 4 OPTIONS GRID */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-btn {
+      background: #FAF6EE;
+      border: 3px solid #000;
+      border-radius: 14px;
+      padding: 18px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 #000;
+      transition: all 0.1s;
+      width: 100%;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: #FFF;
+      transform: translateY(-2px);
+    }
+
+    .option-btn:disabled {
+      cursor: not-allowed;
+    }
+
+    /* Feedback Colors */
+    .option-btn.correct {
+      background-color: #D1E7DD !important;
+      border-color: #0F5132 !important;
+      color: #0F5132;
+    }
+
+    .option-btn.wrong {
+      background-color: #F8D7DA !important;
+      border-color: #842029 !important;
+      color: #842029;
+    }
+
+    /* FEEDBACK & NEXT BUTTON */
+    .feedback-box {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 12px;
+      border: 2.5px solid #000;
+      font-weight: 700;
+      display: none;
+    }
+
+    .feedback-box.correct {
+      background: #D1E7DD;
+      color: #0F5132;
+      display: block;
+    }
+
+    .feedback-box.wrong {
+      background: #F8D7DA;
+      color: #842029;
+      display: block;
+    }
+
+    .action-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .btn-next {
+      background: #FF6B00;
+      color: #FFF;
+      border: 3px solid #000;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 #000;
+      display: none;
+    }
+
+    .btn-next:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    /* FLOATING WIDGET (Hỏi Hedwig) */
+    .floating-widget {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #A855F7;
+      color: #FFF;
+      border: 3px solid #000;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 4px 4px 0 #000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
 
-  <h2>BÀI THI TRẮC NGHIỆM</h2>
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">E</div>
+      <div class="brand-title">ENGLISH JOURNEY - <span>MS. NGUYENMEE</span></div>
+    </div>
+    <div class="user-info-bar hidden" id="userInfoBar">
+      <div class="user-pill">
+        👤 <span id="lblStudentInfo">Hồ Văn Hân (6A3)</span>
+      </div>
+      <button class="btn-logout" onclick="logout()">↳ Thoát</button>
+    </div>
+  </header>
 
-  <!-- PHẦN THÔNG TIN HỌC SINH -->
-  <div class="form-group">
-    <label for="txtHoTen">Họ và tên học sinh:</label>
-    <input type="text" id="txtHoTen" placeholder="Nhập họ và tên...">
+  <div class="container">
+
+    <!-- MÀN HÌNH ĐĂNG NHẬP -->
+    <div class="card login-card" id="loginScreen">
+      <h2>ĐĂNG NHẬP HỌC SINH</h2>
+      <div class="form-group">
+        <label for="txtHoTen">Họ và tên học sinh:</label>
+        <input type="text" id="txtHoTen" placeholder="Ví dụ: Hồ Văn Hân">
+      </div>
+      <div class="form-group">
+        <label for="txtLop">Lớp:</label>
+        <input type="text" id="txtLop" placeholder="Ví dụ: 6A3">
+      </div>
+      <button class="btn-primary" onclick="startQuiz()">Bắt đầu làm bài</button>
+    </div>
+
+    <!-- MÀN HÌNH BÀI THI -->
+    <div id="quizScreen" class="hidden">
+      <!-- HEADER BÀI HỌC -->
+      <div class="card lesson-header">
+        <button class="btn-back" onclick="logout()">← Thoát</button>
+        <div class="lesson-category">NATURE & ENVIRONMENT</div>
+        <div class="lesson-title">IN ONE CUBIC FOOT - LUYỆN TRẮC NGHIỆM</div>
+      </div>
+
+      <!-- KHUNG CÂU HỎI -->
+      <div class="card">
+        <div id="loadingText" style="text-align: center; font-weight: 700; padding: 20px;">
+          ⏳ Đang tải câu hỏi từ Google Sheet...
+        </div>
+
+        <div id="quizContent" class="hidden">
+          <div class="question-badge" id="questionBadge">Câu hỏi 1 / 10</div>
+          <div class="question-text" id="questionText">Nội dung câu hỏi sẽ hiển thị ở đây...</div>
+
+          <div class="options-grid" id="optionsGrid">
+            <!-- 4 Nút đáp án sẽ tự động render ở đây -->
+          </div>
+
+          <div class="feedback-box" id="feedbackBox"></div>
+
+          <div class="action-bar">
+            <button class="btn-next" id="btnNext" onclick="nextQuestion()">Câu tiếp theo ➔</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="form-group">
-    <label for="txtLop">Lớp:</label>
-    <input type="text" id="txtLop" placeholder="Nhập lớp...">
+  <!-- FLOATING WIDGET (Trang trí theo ảnh) -->
+  <div class="floating-widget">
+    🦉 Hỏi Hedwig
   </div>
 
-  <hr>
-
-  <!-- PHẦN CÂU HỎI TRẮC NGHIỆM -->
-  <div class="question">
-    <p><b>Câu 1: Thủ đô của Việt Nam là gì?</b></p>
-    <label><input type="radio" name="q1" value="A"> A. Hà Nội</label><br>
-    <label><input type="radio" name="q1" value="B"> B. TP. Hồ Chí Minh</label><br>
-    <label><input type="radio" name="q1" value="C"> C. Đà Nẵng</label>
-  </div>
-
-  <div class="question">
-    <p><b>Câu 2: 2 + 2 bằng mấy?</b></p>
-    <label><input type="radio" name="q2" value="A"> A. 3</label><br>
-    <label><input type="radio" name="q2" value="B"> B. 4</label><br>
-    <label><input type="radio" name="q2" value="C"> C. 5</label>
-  </div>
-
-  <div class="question">
-    <p><b>Câu 3: Mặt trời mọc ở hướng nào?</b></p>
-    <label><input type="radio" name="q3" value="A"> A. Tây</label><br>
-    <label><input type="radio" name="q3" value="B"> B. Nam</label><br>
-    <label><input type="radio" name="q3" value="C"> C. Đông</label>
-  </div>
-
-  <!-- NÚT NỘP BÀI -->
-  <button onclick="handleFormSubmit()">Nộp bài</button>
-
-  <!-- ĐOẠN MÃ JAVASCRIPT XỬ LÝ VÀ GỬI LÊN GOOGLE SHEET -->
   <script>
-    // 1. URL Web App đã được chèn trực tiếp vào đây
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwJOl0Y3HuJJx7Y6DfbCsHao9ul0PD9n9j9aW8w0ghBpi03oyWJkIHIV-A8PMHE6cVUUQ/exec";
 
-    // 2. Khai báo mảng đáp án đúng cho các câu hỏi
-    const correctAnswers = ['A', 'B', 'C']; // Tương ứng Q1: A, Q2: B, Q3: C
+    let questionsData = [];
+    let currentQuestionIndex = 0;
+    let studentAnswers = [];
+    let currentStudentName = "";
+    let currentStudentClass = "";
 
-    // 3. Hàm tự động chấm điểm và tạo chuỗi chi tiết
-    function gradeQuiz(studentAnswers, correctAnswers) {
+    // Bắt đầu làm bài
+    function startQuiz() {
+      const name = document.getElementById("txtHoTen").value.trim();
+      const className = document.getElementById("txtLop").value.trim();
+
+      if (!name || !className) {
+        alert("Vui lòng nhập đầy đủ Họ tên và Lớp!");
+        return;
+      }
+
+      currentStudentName = name;
+      currentStudentClass = className;
+
+      document.getElementById("lblStudentInfo").innerText = `${name} (${className})`;
+      document.getElementById("loginScreen").classList.add("hidden");
+      document.getElementById("userInfoBar").classList.remove("hidden");
+      document.getElementById("quizScreen").classList.remove("hidden");
+
+      loadQuestionsFromSheet();
+    }
+
+    // Thoát/Đăng xuất
+    function logout() {
+      if (confirm("Bạn có chắc chắn muốn thoát không?")) {
+        location.reload();
+      }
+    }
+
+    // Tải câu hỏi từ Google Sheet
+    function loadQuestionsFromSheet() {
+      fetch(WEB_APP_URL)
+        .then(res => res.json())
+        .then(data => {
+          questionsData = data;
+          document.getElementById("loadingText").classList.add("hidden");
+          document.getElementById("quizContent").classList.remove("hidden");
+          showQuestion(0);
+        })
+        .catch(err => {
+          console.error("Lỗi tải câu hỏi:", err);
+          document.getElementById("loadingText").innerHTML = "❌ Lỗi tải câu hỏi từ Google Sheet!";
+        });
+    }
+
+    // Hiển thị câu hỏi hiện tại
+    function showQuestion(index) {
+      currentQuestionIndex = index;
+      const q = questionsData[index];
+
+      document.getElementById("questionBadge").innerText = `Câu hỏi ${index + 1} / ${questionsData.length}`;
+      document.getElementById("questionText").innerText = q.question;
+
+      const grid = document.getElementById("optionsGrid");
+      grid.innerHTML = "";
+
+      const feedback = document.getElementById("feedbackBox");
+      feedback.className = "feedback-box";
+      feedback.style.display = "none";
+
+      document.getElementById("btnNext").style.display = "none";
+
+      // Render 4 đáp án
+      const keys = ['A', 'B', 'C', 'D'];
+      keys.forEach(key => {
+        if (q.options[key]) {
+          const btn = document.createElement("button");
+          btn.className = "option-btn";
+          btn.innerText = q.options[key];
+          btn.onclick = () => selectOption(key, btn);
+          grid.appendChild(btn);
+        }
+      });
+    }
+
+    // Xử lý khi chọn 1 đáp án
+    function selectOption(selectedKey, selectedBtn) {
+      const q = questionsData[currentQuestionIndex];
+      const buttons = document.querySelectorAll(".option-btn");
+
+      // Vô hiệu hóa tất cả các nút sau khi đã chọn
+      buttons.forEach(btn => btn.disabled = true);
+
+      // Lưu câu trả lời của học sinh
+      studentAnswers[currentQuestionIndex] = selectedKey;
+
+      const isCorrect = selectedKey.toUpperCase() === q.correctAnswer.toUpperCase();
+      const feedback = document.getElementById("feedbackBox");
+
+      if (isCorrect) {
+        selectedBtn.classList.add("correct");
+        feedback.innerText = "🎉 Chính xác!";
+        feedback.className = "feedback-box correct";
+      } else {
+        selectedBtn.classList.add("wrong");
+        // Highlight đáp án đúng
+        const correctText = q.options[q.correctAnswer.toUpperCase()];
+        feedback.innerText = `❌ Chưa chính xác! Đáp án đúng là: ${q.correctAnswer}. ${correctText}`;
+        feedback.className = "feedback-box wrong";
+      }
+
+      // Hiện nút tiếp theo / nộp bài
+      const btnNext = document.getElementById("btnNext");
+      if (currentQuestionIndex === questionsData.length - 1) {
+        btnNext.innerText = "Nộp bài & Lưu kết quả 🚀";
+      } else {
+        btnNext.innerText = "Câu tiếp theo ➔";
+      }
+      btnNext.style.display = "block";
+    }
+
+    // Qua câu tiếp theo hoặc nộp bài
+    function nextQuestion() {
+      if (currentQuestionIndex < questionsData.length - 1) {
+        showQuestion(currentQuestionIndex + 1);
+      } else {
+        submitFinalQuiz();
+      }
+    }
+
+    // Nộp bài lên Google Sheet
+    function submitFinalQuiz() {
       let correctCount = 0;
-      const totalQuestions = correctAnswers.length;
       const detailsArray = [];
 
-      for (let i = 0; i < totalQuestions; i++) {
-        const studentAns = (studentAnswers[i] || '').toString().trim().toUpperCase();
-        const correctAns = (correctAnswers[i] || '').toString().trim().toUpperCase();
-
-        if (studentAns === correctAns) {
+      questionsData.forEach((q, i) => {
+        const studentAns = studentAnswers[i] || '';
+        if (studentAns.toUpperCase() === q.correctAnswer.toUpperCase()) {
           correctCount++;
           detailsArray.push(`C${i + 1}: Đ`);
         } else {
           detailsArray.push(`C${i + 1}: S`);
         }
-      }
+      });
 
-      const detailsString = detailsArray.join(', ');
-      const formattedResult = `${correctCount}/${totalQuestions} câu | ${detailsString}`;
+      const formattedResult = `${correctCount}/${questionsData.length} câu | ${detailsArray.join(', ')}`;
 
-      return {
-        correctCount: correctCount,
-        totalQuestions: totalQuestions,
-        formattedResult: formattedResult
-      };
-    }
-
-    // 4. Hàm xử lý sự kiện khi nhấn nút "Nộp bài"
-    function handleFormSubmit() {
-      // Lấy tên và lớp từ ô input
-      const hoTen = document.getElementById("txtHoTen").value.trim();
-      const lop = document.getElementById("txtLop").value.trim();
-
-      if (!hoTen || !lop) {
-        alert("Vui lòng nhập đầy đủ Họ tên và Lớp!");
-        return;
-      }
-
-      // Lấy đáp án học sinh đã chọn
-      const studentAnswers = [];
-      for (let i = 1; i <= correctAnswers.length; i++) {
-        const selected = document.querySelector(`input[name="q${i}"]:checked`);
-        studentAnswers.push(selected ? selected.value : ''); // Nếu không chọn thì để trống
-      }
-
-      // Chấm điểm
-      const quizResult = gradeQuiz(studentAnswers, correctAnswers);
-
-      // Chuẩn bị dữ liệu gửi đi
       const payload = {
         timestamp: new Date().toLocaleString('vi-VN'),
-        ten: hoTen,
-        lop: lop,
-        ketQua: quizResult.formattedResult,
-        nhanXet: `Đúng ${quizResult.correctCount}/${quizResult.totalQuestions}`
+        ten: currentStudentName,
+        lop: currentStudentClass,
+        ketQua: formattedResult,
+        nhanXet: `Đúng ${correctCount}/${questionsData.length}`
       };
 
-      // Gửi dữ liệu tới Google Sheet via Fetch API
+      document.getElementById("btnNext").innerText = "⏳ Đang gửi kết quả...";
+      document.getElementById("btnNext").disabled = true;
+
       fetch(WEB_APP_URL, {
         method: "POST",
         mode: "no-cors",
@@ -130,14 +589,14 @@
         body: JSON.stringify(payload)
       })
       .then(() => {
-        alert("Nộp bài thành công! Kết quả đã được lưu trên Google Sheet.");
+        alert(`Chúc mừng ${currentStudentName}! Bạn đã hoàn thành bài thi.\nKết quả: ${correctCount}/${questionsData.length} câu đúng.`);
+        location.reload();
       })
-      .catch((err) => {
+      .catch(err => {
         console.error("Lỗi:", err);
-        alert("Có lỗi xảy ra khi gửi bài làm!");
+        alert("Có lỗi xảy ra khi gửi kết quả!");
       });
     }
   </script>
-
 </body>
 </html>
