@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài Thi Trắc Nghiệm</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+    .form-group { margin-bottom: 15px; }
+    label { font-weight: bold; display: block; margin-bottom: 5px; }
+    input[type="text"] { padding: 8px; width: 100%; max-width: 300px; box-sizing: border-box; }
+    .question { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+    button { padding: 10px 20px; background-color: #0F9D58; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+    button:hover { background-color: #0b8043; }
+  </style>
+</head>
+<body>
+
+  <h2>BÀI THI TRẮC NGHIỆM</h2>
+
+  <!-- PHẦN THÔNG TIN HỌC SINH -->
+  <div class="form-group">
+    <label for="txtHoTen">Họ và tên học sinh:</label>
+    <input type="text" id="txtHoTen" placeholder="Nhập họ và tên...">
+  </div>
+
+  <div class="form-group">
+    <label for="txtLop">Lớp:</label>
+    <input type="text" id="txtLop" placeholder="Nhập lớp...">
+  </div>
+
+  <hr>
+
+  <!-- PHẦN CÂU HỎI TRẮC NGHIỆM -->
+  <div class="question">
+    <p><b>Câu 1: Thủ đô của Việt Nam là gì?</b></p>
+    <label><input type="radio" name="q1" value="A"> A. Hà Nội</label><br>
+    <label><input type="radio" name="q1" value="B"> B. TP. Hồ Chí Minh</label><br>
+    <label><input type="radio" name="q1" value="C"> C. Đà Nẵng</label>
+  </div>
+
+  <div class="question">
+    <p><b>Câu 2: 2 + 2 bằng mấy?</b></p>
+    <label><input type="radio" name="q2" value="A"> A. 3</label><br>
+    <label><input type="radio" name="q2" value="B"> B. 4</label><br>
+    <label><input type="radio" name="q2" value="C"> C. 5</label>
+  </div>
+
+  <div class="question">
+    <p><b>Câu 3: Mặt trời mọc ở hướng nào?</b></p>
+    <label><input type="radio" name="q3" value="A"> A. Tây</label><br>
+    <label><input type="radio" name="q3" value="B"> B. Nam</label><br>
+    <label><input type="radio" name="q3" value="C"> C. Đông</label>
+  </div>
+
+  <!-- NÚT NỘP BÀI -->
+  <button onclick="handleFormSubmit()">Nộp bài</button>
+
+  <!-- ĐOẠN MÃ JAVASCRIPT XỬ LÝ VÀ GỬI LÊN GOOGLE SHEET -->
+  <script>
+    // 1. URL Web App đã được chèn trực tiếp vào đây
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwJOl0Y3HuJJx7Y6DfbCsHao9ul0PD9n9j9aW8w0ghBpi03oyWJkIHIV-A8PMHE6cVUUQ/exec";
+
+    // 2. Khai báo mảng đáp án đúng cho các câu hỏi
+    const correctAnswers = ['A', 'B', 'C']; // Tương ứng Q1: A, Q2: B, Q3: C
+
+    // 3. Hàm tự động chấm điểm và tạo chuỗi chi tiết
+    function gradeQuiz(studentAnswers, correctAnswers) {
+      let correctCount = 0;
+      const totalQuestions = correctAnswers.length;
+      const detailsArray = [];
+
+      for (let i = 0; i < totalQuestions; i++) {
+        const studentAns = (studentAnswers[i] || '').toString().trim().toUpperCase();
+        const correctAns = (correctAnswers[i] || '').toString().trim().toUpperCase();
+
+        if (studentAns === correctAns) {
+          correctCount++;
+          detailsArray.push(`C${i + 1}: Đ`);
+        } else {
+          detailsArray.push(`C${i + 1}: S`);
+        }
+      }
+
+      const detailsString = detailsArray.join(', ');
+      const formattedResult = `${correctCount}/${totalQuestions} câu | ${detailsString}`;
+
+      return {
+        correctCount: correctCount,
+        totalQuestions: totalQuestions,
+        formattedResult: formattedResult
+      };
+    }
+
+    // 4. Hàm xử lý sự kiện khi nhấn nút "Nộp bài"
+    function handleFormSubmit() {
+      // Lấy tên và lớp từ ô input
+      const hoTen = document.getElementById("txtHoTen").value.trim();
+      const lop = document.getElementById("txtLop").value.trim();
+
+      if (!hoTen || !lop) {
+        alert("Vui lòng nhập đầy đủ Họ tên và Lớp!");
+        return;
+      }
+
+      // Lấy đáp án học sinh đã chọn
+      const studentAnswers = [];
+      for (let i = 1; i <= correctAnswers.length; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        studentAnswers.push(selected ? selected.value : ''); // Nếu không chọn thì để trống
+      }
+
+      // Chấm điểm
+      const quizResult = gradeQuiz(studentAnswers, correctAnswers);
+
+      // Chuẩn bị dữ liệu gửi đi
+      const payload = {
+        timestamp: new Date().toLocaleString('vi-VN'),
+        ten: hoTen,
+        lop: lop,
+        ketQua: quizResult.formattedResult,
+        nhanXet: `Đúng ${quizResult.correctCount}/${quizResult.totalQuestions}`
+      };
+
+      // Gửi dữ liệu tới Google Sheet via Fetch API
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        alert("Nộp bài thành công! Kết quả đã được lưu trên Google Sheet.");
+      })
+      .catch((err) => {
+        console.error("Lỗi:", err);
+        alert("Có lỗi xảy ra khi gửi bài làm!");
+      });
+    }
+  </script>
+
+</body>
+</html>
